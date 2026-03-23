@@ -2,6 +2,7 @@
 
 namespace Piggy\Api\StaticMappers\Vouchers;
 
+use Piggy\Api\Mappers\Loyalty\MediaMapper;
 use Piggy\Api\Models\Vouchers\Promotion;
 
 class PromotionMapper
@@ -14,6 +15,10 @@ class PromotionMapper
             $attributes = get_object_vars($data->attributes);
         }
 
+        if (isset($data->media)) {
+            $media = (new MediaMapper)->map($data->media);
+        }
+
         return new Promotion(
             $data->uuid,
             $data->name,
@@ -23,7 +28,8 @@ class PromotionMapper
             $data->expiration_duration ?? null,
             isset($data->attributes) ? $attributes : [],
             $data->type,
-            $data->redemptions_per_voucher
+            $data->redemptions_per_voucher,
+            $media ?? null
         );
     }
 }

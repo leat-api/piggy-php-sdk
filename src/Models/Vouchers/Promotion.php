@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Piggy\Api\ApiClient;
 use Piggy\Api\Exceptions\MaintenanceModeException;
 use Piggy\Api\Exceptions\PiggyRequestException;
+use Piggy\Api\Models\Loyalty\Media;
 use Piggy\Api\StaticMappers\Vouchers\PromotionMapper;
 use Piggy\Api\StaticMappers\Vouchers\PromotionsMapper;
 
@@ -57,6 +58,11 @@ class Promotion
     protected $attributes;
 
     /**
+     * @var Media|null
+     */
+    protected $media;
+
+    /**
      * @var string
      */
     const resourceUri = '/api/v3/oauth/clients/promotions';
@@ -73,7 +79,8 @@ class Promotion
         ?int $expiration_duration = null,
         array $attributes = [],
         ?string $type = null,
-        ?int $redemptions_per_voucher = null
+        ?int $redemptions_per_voucher = null,
+        ?Media $media = null
     ) {
         $this->uuid = $uuid;
         $this->name = $name;
@@ -84,6 +91,7 @@ class Promotion
         $this->attributes = $attributes;
         $this->type = $type;
         $this->redemptions_per_voucher = $redemptions_per_voucher;
+        $this->media = $media;
     }
 
     public function getName(): string
@@ -132,6 +140,11 @@ class Promotion
     public function getAttributes(): array
     {
         return $this->attributes;
+    }
+
+    public function getMedia(): ?Media
+    {
+        return $this->media;
     }
 
     /**
