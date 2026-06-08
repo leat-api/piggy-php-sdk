@@ -13,7 +13,7 @@ class CategoriesResource extends BaseResource
     /**
      * @var string
      */
-    protected $resourceUri = '/api/v3/register/categories';
+    protected $resourceUri = '/api/v3/register/product-categories';
 
     /**
      * @param array<string, mixed> $params
@@ -151,7 +151,7 @@ class CategoriesResource extends BaseResource
      */
     public function batch(array $categories)
     {
-        $response = $this->client->put("$this->resourceUri/batch", [
+        $response = $this->client->post("$this->resourceUri/batch", [
             'categories' => $categories,
         ]);
 

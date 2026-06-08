@@ -124,7 +124,7 @@ class OrderReturn
      */
     public static function process(string $uuid, array $body = []): stdClass
     {
-        $response = ApiClient::post(self::resourceUri."$uuid/process", $body);
+        $response = ApiClient::post(self::resourceUri."/$uuid/process", $body);
 
         return $response->getData();
     }

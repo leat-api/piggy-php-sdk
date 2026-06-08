@@ -30,7 +30,7 @@ class Category
     /**
      * @var string
      */
-    const resourceUri = '/api/v3/oauth/clients/categories';
+    const resourceUri = '/api/v3/oauth/clients/product-categories';
 
     public function __construct(
         string $uuid,
@@ -165,7 +165,7 @@ class Category
      */
     public static function batch(array $body): array
     {
-        $response = ApiClient::put(self::resourceUri."/batch", $body);
+        $response = ApiClient::post(self::resourceUri."/batch", $body);
 
         return $response->getData();
     }
