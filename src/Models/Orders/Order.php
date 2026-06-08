@@ -344,7 +344,7 @@ class Order
      */
     public static function process(string $uuid, array $body = []): stdClass
     {
-        $response = ApiClient::post(self::resourceUri."$uuid/process", $body);
+        $response = ApiClient::post(self::resourceUri."/$uuid/process", $body);
 
         return $response->getData();
     }
@@ -375,7 +375,7 @@ class Order
      */
     public static function calculate(array $body): stdClass
     {
-        $response = ApiClient::post(self::resourceUri."/calculate", $body);
+        $response = ApiClient::post(self::resourceUri."/simulate", $body);
 
         return $response->getData();
     }

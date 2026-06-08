@@ -194,7 +194,7 @@ class Product
      */
     public static function batch(array $body): array
     {
-        $response = ApiClient::put(self::resourceUri."/batch", $body);
+        $response = ApiClient::post(self::resourceUri."/batch", $body);
 
         return $response->getData();
     }

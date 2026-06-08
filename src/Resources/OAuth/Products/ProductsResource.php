@@ -163,7 +163,7 @@ class ProductsResource extends BaseResource
      */
     public function batch(array $products)
     {
-        $response = $this->client->put("$this->resourceUri/batch", [
+        $response = $this->client->post("$this->resourceUri/batch", [
             'products' => $products,
         ]);
 

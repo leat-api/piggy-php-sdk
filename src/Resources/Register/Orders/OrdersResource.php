@@ -91,7 +91,7 @@ class OrdersResource extends BaseResource
      */
     public function process(string $uuid, array $body = []): stdClass
     {
-        $response = $this->client->post($this->resourceUri."$uuid/process", $body);
+        $response = $this->client->post($this->resourceUri."/$uuid/process", $body);
 
         return $response->getData();
     }
@@ -124,7 +124,7 @@ class OrdersResource extends BaseResource
      */
     public function calculate(array $body): stdClass
     {
-        $response = $this->client->post($this->resourceUri."/calculate", $body);
+        $response = $this->client->post($this->resourceUri."/simulate", $body);
 
         return $response->getData();
     }
