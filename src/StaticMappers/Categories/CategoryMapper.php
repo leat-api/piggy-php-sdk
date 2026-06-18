@@ -10,7 +10,7 @@ class CategoryMapper
     public static function map(stdClass $data): Category
     {
         return new Category(
-            $data->uuid,
+            $data->uuid ?? '',
             $data->external_identifier,
             $data->name
         );
