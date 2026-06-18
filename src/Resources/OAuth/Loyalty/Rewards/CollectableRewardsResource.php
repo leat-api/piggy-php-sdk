@@ -3,9 +3,10 @@
 namespace Piggy\Api\Resources\OAuth\Loyalty\Rewards;
 
 use Piggy\Api\Exceptions\PiggyRequestException;
-use Piggy\Api\Mappers\Loyalty\Rewards\CollectableRewardMapper;
+use Piggy\Api\Mappers\Loyalty\Rewards\CollectableRewardRedemptionMapper;
 use Piggy\Api\Mappers\Loyalty\Rewards\CollectableRewardsMapper;
 use Piggy\Api\Models\Loyalty\Rewards\CollectableReward;
+use Piggy\Api\Models\Loyalty\Rewards\CollectableRewardRedemption;
 use Piggy\Api\Resources\BaseResource;
 
 class CollectableRewardsResource extends BaseResource
@@ -34,11 +35,11 @@ class CollectableRewardsResource extends BaseResource
     /**
      * @throws PiggyRequestException
      */
-    public function collect(string $loyaltyTransactionUuid): CollectableReward
+    public function collect(string $loyaltyTransactionUuid): CollectableRewardRedemption
     {
         $response = $this->client->put("$this->resourceUri/collect/{$loyaltyTransactionUuid}", []);
 
-        $mapper = new CollectableRewardMapper();
+        $mapper = new CollectableRewardRedemptionMapper();
 
         return $mapper->map($response->getData());
     }

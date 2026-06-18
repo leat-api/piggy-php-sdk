@@ -63,6 +63,29 @@ class CategoriesResourceTest extends OAuthTestCase
      *
      * @throws PiggyRequestException
      */
+    public function it_defaults_uuid_to_empty_string_when_missing(): void
+    {
+        // Order responses (e.g. create-and-process) serialize categories
+        // without a uuid; the mapper must not blow up.
+        $this->addExpectedResponse([
+            'external_identifier' => '123',
+            'name' => 'Category 1 name',
+        ]);
+
+        $category = $this->mockedClient->categories->create(
+            '123',
+            'Category 1 name'
+        );
+
+        $this->assertEquals('', $category->getUuid());
+        $this->assertEquals('123', $category->getExternalIdentifier());
+        $this->assertEquals('Category 1 name', $category->getName());
+    }
+
+    /** @test
+     *
+     * @throws PiggyRequestException
+     */
     public function it_can_get_a_category(): void
     {
         $this->addExpectedResponse([

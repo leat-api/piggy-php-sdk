@@ -9,7 +9,7 @@ use Piggy\Api\ApiClient;
 use Piggy\Api\Exceptions\MaintenanceModeException;
 use Piggy\Api\Exceptions\PiggyRequestException;
 use Piggy\Api\Models\Contacts\Contact;
-use Piggy\Api\StaticMappers\Loyalty\Rewards\CollectableRewardMapper;
+use Piggy\Api\StaticMappers\Loyalty\Rewards\CollectableRewardRedemptionMapper;
 use Piggy\Api\StaticMappers\Loyalty\Rewards\CollectableRewardsMapper;
 
 class CollectableReward
@@ -127,10 +127,10 @@ class CollectableReward
      * @throws MaintenanceModeException|GuzzleException|PiggyRequestException
      * @throws Exception
      */
-    public static function collect(string $loyaltyTransactionUuid, array $params = []): CollectableReward
+    public static function collect(string $loyaltyTransactionUuid, array $params = []): CollectableRewardRedemption
     {
         $response = ApiClient::put(self::resourceUri."/collect/$loyaltyTransactionUuid", $params);
 
-        return CollectableRewardMapper::map($response->getData());
+        return CollectableRewardRedemptionMapper::map($response->getData());
     }
 }

@@ -5,6 +5,7 @@ namespace Piggy\Api\Tests\OAuth\Loyalty\Rewards;
 use GuzzleHttp\Exception\GuzzleException;
 use Piggy\Api\Exceptions\MaintenanceModeException;
 use Piggy\Api\Exceptions\PiggyRequestException;
+use Piggy\Api\Models\Loyalty\Rewards\CollectableRewardRedemption;
 use Piggy\Api\Tests\OAuthTestCase;
 
 class CollectableRewardsResourceTest extends OAuthTestCase
@@ -105,47 +106,17 @@ class CollectableRewardsResourceTest extends OAuthTestCase
      * @throws PiggyRequestException
      * @throws MaintenanceModeException
      */
-    public function it_shows_a_collected_reward()
+    public function it_collects_a_reward_and_returns_a_redemption()
     {
-
         $this->addExpectedResponse([
-            'contact' => [
-                'uuid' => '123',
-                'email' => 'nizlslzvzrt_42@hytmxil.cym',
-                'credit_balance' => [
-                    'balance' => 1612,
-                ],
-            ],
-            'created_at' => '2022-06-30T13:29:16+00:00',
             'uuid' => '036c1eb8-c81e-4d93-9e33-2928c93fe3c1',
-            'title' => 'reward test michael sdk',
-            'reward' => [
-                'uuid' => 'e76e6fb2-ed67-4947-acb4-53bab93c97fa',
-                'title' => 'reward test michael sdk',
-                'description' => '',
-                'required_credits' => 5,
-                'active' => true,
-                'reward_type' => 'PHYSICAL',
-            ],
-            'expires_at' => '2024-06-30T13:29:16+00:00',
-            'has_been_collected' => false,
+            'status' => 'COLLECTED',
         ]);
 
-        $reward = $this->mockedClient->collectableRewards->collect('f549824e-8c56-4a0e-b3d7-5824d0c57757');
+        $redemption = $this->mockedClient->collectableRewards->collect('f549824e-8c56-4a0e-b3d7-5824d0c57757');
 
-        $this->assertEquals('123', $reward->getContact()->getUuid());
-        $this->assertEquals('nizlslzvzrt_42@hytmxil.cym', $reward->getContact()->getEmail());
-        $this->assertEquals(1612, $reward->getContact()->getCreditBalance()->getBalance());
-        $this->assertEquals('2022-06-30T13:29:16+00:00', $reward->getCreatedAt()->format('c'));
-        $this->assertEquals('036c1eb8-c81e-4d93-9e33-2928c93fe3c1', $reward->getUuid());
-        $this->assertEquals('reward test michael sdk', $reward->getTitle());
-        $this->assertEquals('e76e6fb2-ed67-4947-acb4-53bab93c97fa', $reward->getReward()->getUuid());
-        $this->assertEquals('reward test michael sdk', $reward->getReward()->getTitle());
-        $this->assertEquals('', $reward->getReward()->getDescription());
-        $this->assertEquals(5, $reward->getReward()->getRequiredCredits());
-        $this->assertTrue($reward->getReward()->isActive());
-        $this->assertEquals('PHYSICAL', $reward->getReward()->getRewardType());
-        $this->assertEquals('2024-06-30T13:29:16+00:00', $reward->getExpiresAt()->format('c'));
-        $this->assertFalse($reward->hasBeenCollected());
+        $this->assertInstanceOf(CollectableRewardRedemption::class, $redemption);
+        $this->assertEquals('036c1eb8-c81e-4d93-9e33-2928c93fe3c1', $redemption->getUuid());
+        $this->assertEquals('COLLECTED', $redemption->getStatus());
     }
 }
